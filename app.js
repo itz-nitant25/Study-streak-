@@ -94,6 +94,6 @@ Math.floor(total/60) + " min"
 
 document.getElementById("openTimer").onclick = () => {
 
-window.open("https://toppertimer.vercel.app","_blank")
+window.open("https://topper-timer.vercel.app/","_blank")
 
 }
