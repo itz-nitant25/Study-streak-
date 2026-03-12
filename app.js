@@ -1,97 +1,99 @@
-// load streak
-let streak = localStorage.getItem("studyStreak") || 0
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"
+
+import {
+getFirestore,
+doc,
+getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"
+
+
+// FIREBASE CONFIG
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBtotVbhe6RBn2QPQCSXbCVcY9rL_36KwM",
+authDomain: "toppertimer-70de2.firebaseapp.com",
+projectId: "toppertimer-70de2"
+
+}
+
+
+const app = initializeApp(firebaseConfig)
+
+const db = getFirestore(app)
+
+const auth = getAuth(app)
+
+const provider = new GoogleAuthProvider()
+
+
+// LOGIN BUTTON
+
+document.getElementById("userBox").innerHTML =
+`<button id="loginBtn">Login</button>`
+
+document.getElementById("loginBtn").onclick = () => {
+
+signInWithPopup(auth,provider)
+
+}
+
+
+// USER STATE
+
+onAuthStateChanged(auth, async(user)=>{
+
+if(!user) return
+
+document.getElementById("userBox").innerHTML =
+
+`<img src="${user.photoURL}" width="40"> ${user.displayName}`
+
+
+// LOAD DATA
+
+const ref = doc(db,"users",user.uid)
+
+const snap = await getDoc(ref)
+
+if(!snap.exists()) return
+
+let data = snap.data()
+
+let total = data.totalTime || 0
+
+let streak = data.streak || 0
+
+
+// LEVEL SYSTEM
+
+let level = Math.floor(total / 3600) + 1
+
 
 document.getElementById("streak").innerText = streak
 
-// create heatmap
-let heatmap=document.getElementById("heatmap")
+document.getElementById("level").innerText = level
 
-for(let i=0;i<30;i++){
+document.getElementById("time").innerText =
+Math.floor(total/60) + " min"
 
-let box=document.createElement("div")
+})
 
-box.classList.add("day")
 
-heatmap.appendChild(box)
+// OPEN TIMER WEBSITE
 
-}
+document.getElementById("openTimer").onclick = () => {
 
-// check timer data from main site
-function checkTimerStudy(){
-
-let studyTime = localStorage.getItem("todayStudy") || 0
-
-// minimum 10 minutes
-if(studyTime >= 600){
-
-updateStreak()
-
-activateHeatmap()
+window.open("https://toppertimer.vercel.app","_blank")
 
 }
-
-}
-
-function updateStreak(){
-
-let today=new Date().toDateString()
-
-let lastDay=localStorage.getItem("lastStudyDay")
-
-if(lastDay !== today){
-
-streak++
-
-localStorage.setItem("studyStreak",streak)
-
-localStorage.setItem("lastStudyDay",today)
-
-}
-
-document.getElementById("streak").innerText=streak
-
-updateMessage()
-
-}
-
-function activateHeatmap(){
-
-let today=new Date().getDate()
-
-let days=document.querySelectorAll(".day")
-
-if(days[today-1]){
-
-days[today-1].classList.add("active")
-
-}
-
-}
-
-function updateMessage(){
-
-let msg=""
-
-if(streak < 3){
-
-msg="Start your streak 🚀"
-
-}
-
-else if(streak < 7){
-
-msg="Nice consistency 🔥"
-
-}
-
-else{
-
-msg="Topper mode activated 💪"
-
-}
-
-document.getElementById("message").innerText=msg
-
-}
-
-checkTimerStudy()
