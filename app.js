@@ -1,99 +1,123 @@
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 
 import {
+
 getFirestore,
 doc,
-getDoc
+getDoc,
+setDoc
+
 }
-from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
 
-import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-
-// FIREBASE CONFIG
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBtotVbhe6RBn2QPQCSXbCVcY9rL_36KwM",
-authDomain: "toppertimer-70de2.firebaseapp.com",
-projectId: "toppertimer-70de2"
+apiKey:"AIzaSyBtotVbhe6RBn2QPQCSXbCVcY9rL_36KwM",
+
+authDomain:"toppertimer-70de2.firebaseapp.com",
+
+projectId:"toppertimer-70de2",
+
+storageBucket:"toppertimer-70de2.appspot.com",
+
+messagingSenderId:"809874833955",
+
+appId:"1:809874833955:web:55580be4fcb2534a822796"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+let xp = 0;
+let level = 1;
+let streak = 0;
+
+
+const streakEl = document.getElementById("streak");
+const levelEl = document.getElementById("level");
+const xpFill = document.getElementById("xpfill");
+const xpText = document.getElementById("xptext");
+
+
+async function loadData(){
+
+const ref = doc(db,"global","streakData");
+
+const snap = await getDoc(ref);
+
+if(snap.exists()){
+
+let data = snap.data();
+
+xp = data.xp || 0;
+
+level = data.level || 1;
+
+streak = data.streak || 0;
+
+updateUI();
+
+}
 
 }
 
 
-const app = initializeApp(firebaseConfig)
+function updateUI(){
 
-const db = getFirestore(app)
+streakEl.innerText = streak;
 
-const auth = getAuth(app)
+levelEl.innerText = level;
 
-const provider = new GoogleAuthProvider()
+let percent = (xp/100)*100;
 
+xpFill.style.width = percent+"%";
 
-// LOGIN BUTTON
-
-document.getElementById("userBox").innerHTML =
-`<button id="loginBtn">Login</button>`
-
-document.getElementById("loginBtn").onclick = () => {
-
-signInWithPopup(auth,provider)
+xpText.innerText = xp+" / 100 XP";
 
 }
 
 
-// USER STATE
+document.getElementById("addStudy").onclick = async ()=>{
 
-onAuthStateChanged(auth, async(user)=>{
+xp += 20;
 
-if(!user) return
+if(xp >= 100){
 
-document.getElementById("userBox").innerHTML =
+xp = 0;
 
-`<img src="${user.photoURL}" width="40"> ${user.displayName}`
-
-
-// LOAD DATA
-
-const ref = doc(db,"users",user.uid)
-
-const snap = await getDoc(ref)
-
-if(!snap.exists()) return
-
-let data = snap.data()
-
-let total = data.totalTime || 0
-
-let streak = data.streak || 0
-
-
-// LEVEL SYSTEM
-
-let level = Math.floor(total / 3600) + 1
-
-
-document.getElementById("streak").innerText = streak
-
-document.getElementById("level").innerText = level
-
-document.getElementById("time").innerText =
-Math.floor(total/60) + " min"
-
-})
-
-
-// OPEN TIMER WEBSITE
-
-document.getElementById("openTimer").onclick = () => {
-
-window.open("https://topper-timer.vercel.app/","_blank")
+level++;
 
 }
+
+streak++;
+
+updateUI();
+
+
+await setDoc(doc(db,"global","streakData"),{
+
+xp:xp,
+
+level:level,
+
+streak:streak
+
+});
+
+};
+
+
+document.getElementById("openTimer").onclick = ()=>{
+
+window.open("https://toppertimer.vercel.app");
+
+};
+
+
+loadData();
