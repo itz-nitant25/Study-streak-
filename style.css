@@ -1,30 +1,22 @@
 body{
 
 background:#020617;
-
 color:white;
-
 font-family:Arial;
 
-margin:0;
-
 display:flex;
-
 justify-content:center;
-
 align-items:center;
 
 height:100vh;
+margin:0;
 
 }
 
-.container{
+.app{
 
+width:350px;
 text-align:center;
-
-width:90%;
-
-max-width:500px;
 
 }
 
@@ -32,60 +24,26 @@ max-width:500px;
 
 background:#1e293b;
 
-padding:30px;
+padding:15px;
 
-border-radius:12px;
+border-radius:10px;
 
-margin-bottom:30px;
-
-}
-
-#streak{
-
-font-size:60px;
-
-color:#38bdf8;
-
-margin:0;
+margin:10px;
 
 }
 
-#heatmap{
+button{
 
-display:grid;
+padding:12px 20px;
 
-grid-template-columns:repeat(7,35px);
+border:none;
 
-gap:8px;
+border-radius:8px;
 
-justify-content:center;
+background:#38bdf8;
+
+cursor:pointer;
 
 margin-top:20px;
-
-}
-
-.day{
-
-width:35px;
-
-height:35px;
-
-background:#1e293b;
-
-border-radius:5px;
-
-}
-
-.active{
-
-background:#22c55e;
-
-}
-
-#message{
-
-margin-top:20px;
-
-color:#cbd5f5;
 
 }
