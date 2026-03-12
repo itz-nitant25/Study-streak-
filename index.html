@@ -3,9 +3,7 @@
 
 <head>
 
-<title>TopperTimer Progress</title>
-
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Study Streak</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -13,41 +11,53 @@
 
 <body>
 
-<div class="app">
-
-<h1>🔥 Study Progress</h1>
-
-<div id="userBox" class="card"></div>
+<h1>Study Streak</h1>
 
 <div class="card">
 
-<h3>🔥 Streak</h3>
-<h2 id="streak">0</h2>
+<h2>🔥 Current Streak</h2>
+
+<h1 id="streak">0</h1>
+
+<p>days</p>
 
 </div>
+
 
 <div class="card">
 
-<h3>🎮 Level</h3>
-<h2 id="level">1</h2>
+<h2>🎮 Level</h2>
+
+<h1 id="level">1</h1>
+
+<div class="xpbar">
+
+<div id="xpfill"></div>
 
 </div>
+
+<p id="xptext">0 / 100 XP</p>
+
+</div>
+
 
 <div class="card">
 
-<h3>📊 Total Study</h3>
-<h2 id="time">0 min</h2>
+<h2>📚 Add Study Time</h2>
+
+<button id="addStudy">+30 Minutes Study</button>
 
 </div>
 
-<button id="openTimer">
-⏱ Open TopperTimer
-</button>
+
+<div class="card">
+
+<button id="openTimer">Open TopperTimer</button>
 
 </div>
+
 
 <script type="module" src="app.js"></script>
 
 </body>
-
 </html>
