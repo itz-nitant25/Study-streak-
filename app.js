@@ -1,41 +1,97 @@
-let streak = localStorage.getItem("streak") || 0
+// load streak
+let streak = localStorage.getItem("studyStreak") || 0
 
 document.getElementById("streak").innerText = streak
 
-let heatmap = document.getElementById("heatmap")
+// create heatmap
+let heatmap=document.getElementById("heatmap")
 
 for(let i=0;i<30;i++){
 
-let div=document.createElement("div")
+let box=document.createElement("div")
 
-div.classList.add("day")
+box.classList.add("day")
 
-heatmap.appendChild(div)
+heatmap.appendChild(box)
 
 }
 
-function markStudy(){
+// check timer data from main site
+function checkTimerStudy(){
 
-let today=new Date().getDate()
+let studyTime = localStorage.getItem("todayStudy") || 0
 
-let days=document.querySelectorAll(".day")
+// minimum 10 minutes
+if(studyTime >= 600){
 
-days[today-1].classList.add("active")
+updateStreak()
 
-let last=localStorage.getItem("lastDay")
+activateHeatmap()
 
-let now=new Date().toDateString()
+}
 
-if(last!==now){
+}
+
+function updateStreak(){
+
+let today=new Date().toDateString()
+
+let lastDay=localStorage.getItem("lastStudyDay")
+
+if(lastDay !== today){
 
 streak++
 
-localStorage.setItem("streak",streak)
+localStorage.setItem("studyStreak",streak)
 
-localStorage.setItem("lastDay",now)
+localStorage.setItem("lastStudyDay",today)
 
 }
 
 document.getElementById("streak").innerText=streak
 
+updateMessage()
+
 }
+
+function activateHeatmap(){
+
+let today=new Date().getDate()
+
+let days=document.querySelectorAll(".day")
+
+if(days[today-1]){
+
+days[today-1].classList.add("active")
+
+}
+
+}
+
+function updateMessage(){
+
+let msg=""
+
+if(streak < 3){
+
+msg="Start your streak 🚀"
+
+}
+
+else if(streak < 7){
+
+msg="Nice consistency 🔥"
+
+}
+
+else{
+
+msg="Topper mode activated 💪"
+
+}
+
+document.getElementById("message").innerText=msg
+
+}
+
+checkTimerStudy()
