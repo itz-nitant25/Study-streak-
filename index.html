@@ -3,34 +3,46 @@
 
 <head>
 
-<title>TopperTimer</title>
-
-<link rel="stylesheet" href="style.css">
+<title>TopperTimer Progress</title>
 
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<h1>⏱ TopperTimer</h1>
+<div class="app">
 
-<div id="loginBox">
-<button id="loginBtn">Login with Google</button>
-</div>
+<h1>🔥 Study Progress</h1>
 
-<div class="timerBox">
+<div id="userBox" class="card"></div>
 
-<h2 id="timer">00:00</h2>
+<div class="card">
 
-<button id="startBtn">Start</button>
-<button id="stopBtn">Stop</button>
+<h3>🔥 Streak</h3>
+<h2 id="streak">0</h2>
 
 </div>
 
-<div class="streakBox">
+<div class="card">
 
-🔥 Streak: <span id="streak">0</span> days
+<h3>🎮 Level</h3>
+<h2 id="level">1</h2>
+
+</div>
+
+<div class="card">
+
+<h3>📊 Total Study</h3>
+<h2 id="time">0 min</h2>
+
+</div>
+
+<button id="openTimer">
+⏱ Open TopperTimer
+</button>
 
 </div>
 
