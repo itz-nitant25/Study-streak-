@@ -3,36 +3,39 @@
 
 <head>
 
-<title>TopperTimer Study Streak</title>
+<title>TopperTimer</title>
 
 <link rel="stylesheet" href="style.css">
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 </head>
 
 <body>
 
-<div class="container">
+<h1>⏱ TopperTimer</h1>
 
-<h1>🔥 Study Streak</h1>
+<div id="loginBox">
+<button id="loginBtn">Login with Google</button>
+</div>
 
-<div class="card">
+<div class="timerBox">
 
-<h2 id="streak">0</h2>
-<p>Day Streak</p>
+<h2 id="timer">00:00</h2>
+
+<button id="startBtn">Start</button>
+<button id="stopBtn">Stop</button>
 
 </div>
 
-<h3>Study Activity</h3>
+<div class="streakBox">
 
-<div id="heatmap"></div>
-
-<p id="message"></p>
+🔥 Streak: <span id="streak">0</span> days
 
 </div>
 
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
 
 </body>
+
 </html>
