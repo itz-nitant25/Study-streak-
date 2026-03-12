@@ -115,7 +115,7 @@ streak:streak
 
 document.getElementById("openTimer").onclick = ()=>{
 
-window.open("https://toppertimer.vercel.app");
+window.open("https://topper-timer.vercel.app/");
 
 };
 
